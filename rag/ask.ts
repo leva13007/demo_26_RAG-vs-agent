@@ -15,7 +15,7 @@ if (!question) {
 }
 const K = Number(args.k ?? 8);
 const INDEX = String(args.index ?? "rag/index");
-const MODEL = String(args.model ?? "sonnet");
+const MODEL = String(args.model ?? process.env.MODEL ?? "sonnet");
 const CLAUDE_BIN = process.env.CLAUDE_BIN ?? "claude";
 const asJson = Boolean(args.json);
 const log = (...a: unknown[]) => { if (!asJson) console.log(...a); };
@@ -72,6 +72,7 @@ if (res.status !== 0) {
 }
 const out = JSON.parse(res.stdout) as {
   result: string;
+  modelUsage?: Record<string, unknown>;
   total_cost_usd?: number;
   duration_ms?: number;
   usage?: { input_tokens?: number; output_tokens?: number; cache_read_input_tokens?: number; cache_creation_input_tokens?: number };
@@ -98,6 +99,7 @@ const metrics = {
 if (asJson) {
   console.log(JSON.stringify({ player: "rag", question, answer: out.result, citations, retrieved: top.map(({ text, ...c }) => c), metrics }, null, 2));
 } else {
+  log(`🤖 ${Object.keys(out.modelUsage ?? {}).join(", ") || MODEL}`);
   log(`\n💬 ${out.result}\n`);
   if (citations.length) {
     log("📎 Джерела:");

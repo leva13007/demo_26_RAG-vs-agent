@@ -40,7 +40,8 @@ if [[ "${2:-}" == "--json" ]]; then
   claude "${FLAGS[@]}" --output-format json < /dev/null
 else
   claude "${FLAGS[@]}" --output-format stream-json --verbose < /dev/null | jq -r '
-    if .type=="assistant" then
+    if .type=="system" and .subtype=="init" then "🤖 \(.model)"
+    elif .type=="assistant" then
       (.message.content[] |
         if .type=="tool_use" then "🔧 \(.name|sub("mcp__rag__";"🧠 ")) \(.input|tostring|.[0:160])"
         elif .type=="text" then "💬 \(.text)"
