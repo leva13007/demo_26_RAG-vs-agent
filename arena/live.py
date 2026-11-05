@@ -133,8 +133,8 @@ def main():
     pick=lambda i:(RUNS/i if i else latest())
     if a.c=="run":
         qs=AIR if a.what==["air"] else list(range(1,len(QUESTIONS)+1)) if a.what==["all"] else [int(x) for x in a.what]
+        preflight()   # до створення папки: порожня папка стала б «найновішим прогоном» для show і table
         d=RUNS/(a.id or time.strftime("%H%M%S")); d.mkdir(parents=True,exist_ok=True)
-        preflight()
         tasks=[]
         for q in qs:
             for pl in PLAYERS:
