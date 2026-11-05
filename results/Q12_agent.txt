@@ -1,0 +1,12 @@
+🔧 Grep {"pattern":"Plane|Плейн|Плен","output_mode":"count","-i":true}
+🔧 Grep {"pattern":"Plane|Плейн|Плен","output_mode":"content","-i":true,"-C":1}
+💬 Основний збіг — файл 2026-07-18 (12 згадок). Дивлюся його.
+🔧 Grep {"pattern":"Plane|Плейн|Плен|docker|докер","path":"/Users/zloyleva/projects/community/it_community_stuff/streams/_backlog/RAG_vs_agent/corpus/2026-07-18_YDs0AGz
+🔧 Grep {"pattern":"^(title|date):","path":"/Users/zloyleva/projects/community/it_community_stuff/streams/_backlog/RAG_vs_agent/corpus/2026-07-18_YDs0AGzYjoI.md","outpu
+💬 Збіги в цьому файлі — це слово «захоплення», тобто хибні спрацювання. Шукаю точніше.
+🔧 Grep {"pattern":"\\bPlane\\b|Плейн|Плеін|docker.?compose|докер.?компоуз|project management|таск.?трекер","output_mode":"content","-i":true,"head_limit":40}
+💬 У транскриптах відповіді немає. Про встановлення Plane через Docker Compose там нічого не сказано.
+
+Я шукав збіги за «Plane» та його кириличними варіантами, за «Docker Compose» і за «таск-трекер». Єдиний збіг — 2026-09-12_v9dLbeQk3YY.md [00:46:20], де згадано «Project Management» у зовсім іншому контексті. У файлі 2026-07-18_YDs0AGzYjoI.md збіги були хибними: пошук ловив частину слова «захоплення».
+
+⏱  12.195 s · кроків 6 · tokens in 31016 / out 1099 · ~$0.0361807

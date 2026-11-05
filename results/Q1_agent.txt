@@ -1,0 +1,17 @@
+🔧 Grep {"pattern":"Twitter|твіттер|твітер","-i":true,"output_mode":"content","head_limit":60}
+💬 Потрібно знайти стек у файлі 2026-09-05.
+🔧 Grep {"pattern":"стек|Stack|Next|React|Node|SQLite|Postgres|Python|Django|FastAPI|Express|Vue|Laravel|TypeScript","path":"/Users/zloyleva/projects/community/it_commu
+🔧 Read {"file_path":"/Users/zloyleva/projects/community/it_community_stuff/streams/_backlog/RAG_vs_agent/corpus/2026-09-05_IGudWZHHq_I.md","offset":405,"limit":15}
+💬 Міні-Twitter будували на стрімі **IT Friday #017**, «Створюємо міні-Twitter за 2 години з AI-агентом наживо». Це файл 2026-09-05_IGudWZHHq_I.md.
+
+**Стек.** Спочатку його назвали в процесі: «Front у нас буде react. Далі, а backend у нас нехай буде nest. … database. Нехай буде позрис[Postgres]» (2026-09-05_IGudWZHHq_I.md [00:17:47]). Пізніше агент зафіксував рішення: «Стек зафіксований» (2026-09-05_IGudWZHHq_I.md [00:59:42]).
+
+У підсумку в кінці стріму стек описано так: «Технології Nest, Prisma, SQ на бекнді, React V на фронті. Contract first» (2026-09-05_IGudWZHHq_I.md [02:56:57]). Тут «SQ» і «React V» — найімовірніше, помилки розпізнавання. Їх можна прочитати як SQL-база та React з Vite, але в транскрипті цього прямо не сказано.
+
+**Тести.** «Vтеest і Ox» (2026-09-05_IGudWZHHq_I.md [02:58:15]). Це теж спотворений запис, схоже на Vitest.
+
+**Підхід.** Contract first: спочатку документація (BRD, functional і non-functional requirements, acceptance criteria, data model, OpenAPI, ADR), потім дорожня карта по фазах (2026-09-05_IGudWZHHq_I.md [02:57:22]).
+
+**Що реалізовано.** Логін, стрічка, пости, лайки (2026-09-05_IGudWZHHq_I.md [02:56:30]) і профайл (2026-09-05_IGudWZHHq_I.md [02:58:15]).
+
+⏱  10.804 s · кроків 4 · tokens in 21998 / out 1193 · ~$0.057021699999999995

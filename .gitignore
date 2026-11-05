@@ -1,0 +1,7 @@
+# Відтворюються: yt-dlp (raw) і rag/ingest.ts (індекси)
+raw/
+rag/index*/
+arena/runs/
+__pycache__/
+.DS_Store
+node_modules/

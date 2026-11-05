@@ -1,0 +1,11 @@
+🔧 🧠 semantic_search {"query":"ServerlessDays Cardiff класичні Lambda тепер називаються","k":8}
+🔧 Grep {"pattern":"Cardiff","-i":true,"output_mode":"content"}
+🔧 Grep {"pattern":"Lambda Managed|Managed Instances|Durable|класичн|classic|Lambda Functions|tenant|Lambda (тепер|називаєть)","path":"/Users/zloyleva/projects/communit
+🔧 🧠 semantic_search {"query":"звичайні лямбди тепер називаються Lambda Default, Lambda Managed Instances, Durable functions","k":8}
+💬 Доповідач називає класичні лямбда-функції **Event Function**: «оці класичні лямбда-функції зараз називаються Event Function». Це стандартні AWS-функції: хендлер отримує івент і щось із ним робить. Платять за час виконання, а він обмежений. (2026-10-24_uzaPapLB6B8.md [00:18:14], 2026-10-24_uzaPapLB6B8.md [00:18:40])
+
+Пізніше, коли мова йде про microVMs, він формулює це інакше: «звичайна лямбда-функція тепер називається event driven handler». Вона живе до 15 хвилин, а microVM-функція — до восьми годин. (2026-10-24_uzaPapLB6B8.md [01:18:26])
+
+Транскрипт розпізнано автоматично, тому в стрімі є два формулювання. Коли доповідач каже «Event Function», він переказує слайд. Другий варіант, «event driven handler», він озвучує в розділі про microVMs.
+
+⏱  9.411 s · кроків 5 · tokens in 27734 / out 878 · ~$0.0560677
