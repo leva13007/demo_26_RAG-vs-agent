@@ -10,7 +10,7 @@ SYSTEM="$(cat "$ROOT/agent/system.md")"
 FLAGS=(
   -p "$Q"
   --model "${MODEL:-sonnet}"
-  --tools "Grep,Glob,Read" --allowedTools "Grep,Glob,Read"
+  --tools "Grep,Glob,Read"   # без --allowedTools: читання лише всередині corpus/, решту Claude Code відхиляє
   --system-prompt "$SYSTEM"
   --disable-slash-commands --strict-mcp-config --setting-sources ""
   --no-session-persistence
@@ -20,9 +20,9 @@ FLAGS=(
 cd "$ROOT/corpus"
 
 if [[ "${2:-}" == "--json" ]]; then
-  claude "${FLAGS[@]}" --output-format json
+  claude "${FLAGS[@]}" --output-format json < /dev/null
 else
-  claude "${FLAGS[@]}" --output-format stream-json --verbose | jq -r '
+  claude "${FLAGS[@]}" --output-format stream-json --verbose < /dev/null | jq -r '
     if .type=="assistant" then
       (.message.content[] |
         if .type=="tool_use" then "🔧 \(.name) \(.input|tostring|.[0:160])"
