@@ -102,9 +102,9 @@ EMBED_MODEL=embeddinggemma node eval_retrieval.ts --index rag/index-gemma
 EMBED_MODEL=embeddinggemma node rag/ask.ts "питання" --index rag/index-gemma
 ```
 
-⚠ **`EMBED_MODEL` при пошуку має збігатися з моделлю індексу.** Код цього не перевіряє: при розбіжності помилки не буде, лише сміття у видачі. Модель індексу показує рядок 🔎 в `rag/ask.ts` та `jq .model rag/index-gemma/chunks.json`.
+⚠ **`EMBED_MODEL` при пошуку має збігатися з моделлю індексу.** `rag/ask.ts` це перевіряє і за розбіжності завершується з помилкою. `eval_retrieval.ts` і `mcp-rag.ts` не перевіряють: там розбіжність дасть лише сміття у видачі. Модель індексу показує `jq .model rag/index-gemma/chunks.json`.
 
-⚠ **`live.py` і Hybrid завжди працюють з `rag/index`.** Не задавай `EMBED_MODEL` разом із `live.py`. Щоб прогнати всіх трьох на іншій моделі ембедингів, треба перебудувати сам `rag/index`, а старий спершу зберегти під іншою назвою.
+⚠ **`live.py` і Hybrid завжди працюють з `rag/index`.** Не задавай `EMBED_MODEL` разом із `live.py`: RAG позначиться як невдалий прогін. Щоб прогнати всіх трьох на іншій моделі ембедингів, треба перебудувати сам `rag/index`, а старий спершу зберегти під іншою назвою.
 
 Деякі моделі просять префікс перед запитом: `eval_retrieval.ts --query-prefix "task: search result | query: "`. Префікси для документів `ingest.ts` не підтримує.
 
