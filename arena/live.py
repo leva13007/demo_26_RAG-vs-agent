@@ -26,11 +26,21 @@ lock=threading.Lock()
 def say(*a):
     with lock: print(*a,flush=True)
 
+def index_model():
+    # model стоїть на початку chunks.json, увесь файл на 7 МБ читати не треба
+    with open(RAG/"rag/index/chunks.json",encoding="utf8") as f: m=re.search(r'"model":"([^"]+)"',f.read(500))
+    if not m: sys.exit("Не можу прочитати модель індексу з rag/index/chunks.json")
+    return m.group(1)
+
 def preflight():
+    norm=lambda m:m.removesuffix(":latest")
+    model=index_model(); asked=os.environ.get("EMBED_MODEL",model)
+    # інакше RAG упаде, а Hybrid тихо стане агентом на Grep і виглядатиме в таблиці як нормальний прогін
+    if norm(asked)!=norm(model): sys.exit(f"EMBED_MODEL={asked}, а rag/index побудований моделлю {model}. Прибери змінну: live.py завжди працює з rag/index.")
     try:
         tags=json.load(urllib.request.urlopen("http://localhost:11434/api/tags",timeout=3))
-        if not any(m["name"].startswith("bge-m3") for m in tags["models"]): sys.exit("Ollama працює, але немає bge-m3")
-        req=urllib.request.Request("http://localhost:11434/api/embed",json.dumps({"model":"bge-m3","input":["warm"]}).encode(),{"content-type":"application/json"})
+        if not any(norm(m["name"])==norm(model) for m in tags["models"]): sys.exit(f"Ollama працює, але немає {model}")
+        req=urllib.request.Request("http://localhost:11434/api/embed",json.dumps({"model":model,"input":["warm"]}).encode(),{"content-type":"application/json"})
         urllib.request.urlopen(req,timeout=60).read()
     except OSError as ex: sys.exit(f"Ollama недоступна: {ex}")
 
