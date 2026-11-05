@@ -93,6 +93,14 @@ export function dot(a: Float32Array, b: Float32Array): number {
   return s;
 }
 
+// Вектори різних моделей не порівнюються: без перевірки буде не помилка, а сміття у видачі.
+// Повертає текст проблеми або null, якщо модель запиту збігається з моделлю індексу.
+export function modelMismatch(meta: IndexMeta, dir: string): string | null {
+  const norm = (m: string) => m.replace(/:latest$/, "");
+  if (norm(meta.model) === norm(EMBED_MODEL)) return null;
+  return `Індекс ${dir} побудований моделлю "${meta.model}", а запит рахується моделлю "${EMBED_MODEL}". Задай EMBED_MODEL=${meta.model} або інший індекс.`;
+}
+
 export function loadIndex(dir: string): { meta: IndexMeta; vectors: Float32Array[] } {
   const meta: IndexMeta = JSON.parse(readFileSync(join(dir, "chunks.json"), "utf8"));
   const buf = readFileSync(join(dir, "vectors.bin"));

@@ -5,7 +5,7 @@
 //   --retrieve-only  показати лише знайдені чанки, без виклику Claude (зручно для демо пошуку)
 //   --json           вивести один JSON-об'єкт (для арени)
 import { spawnSync } from "node:child_process";
-import { parseArgs, embed, dot, loadIndex, fmt, ytLink, EMBED_MODEL } from "./lib.ts";
+import { parseArgs, embed, dot, loadIndex, fmt, ytLink, modelMismatch } from "./lib.ts";
 
 const args = parseArgs(process.argv.slice(2));
 const question = args._.join(" ").trim();
@@ -23,11 +23,9 @@ const log = (...a: unknown[]) => { if (!asJson) console.log(...a); };
 // 1. Retrieval
 const tStart = Date.now();
 const { meta, vectors } = loadIndex(INDEX);
-// Вектори різних моделей не порівнюються: без цієї перевірки буде не помилка, а сміття у видачі
-const sameModel = (m: string) => m.replace(/:latest$/, "");
-if (sameModel(meta.model) !== sameModel(EMBED_MODEL)) {
-  console.error(`Індекс ${INDEX} побудований моделлю "${meta.model}", а запит рахується моделлю "${EMBED_MODEL}".`);
-  console.error(`Задай ту саму модель: EMBED_MODEL=${meta.model} node rag/ask.ts ... --index ${INDEX}`);
+const mismatch = modelMismatch(meta, INDEX);
+if (mismatch) {
+  console.error(mismatch);
   process.exit(1);
 }
 const [qv] = await embed([question]);

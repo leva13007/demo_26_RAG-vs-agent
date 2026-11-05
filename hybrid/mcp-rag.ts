@@ -12,7 +12,7 @@
 import { createInterface } from "node:readline";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { embed, dot, loadIndex, fmt } from "../rag/lib.ts";
+import { embed, dot, loadIndex, fmt, modelMismatch } from "../rag/lib.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const INDEX = process.env.RAG_INDEX ?? join(HERE, "..", "rag", "index");
@@ -37,6 +37,9 @@ const TOOL = {
 };
 
 async function semanticSearch(query: string, k = 8): Promise<string> {
+  // Падаємо на виклику, а не на старті: інакше Claude Code тихо запустив би агента без цього інструмента
+  const mismatch = modelMismatch(meta, INDEX);
+  if (mismatch) throw new Error(mismatch);
   const K = Math.min(Math.max(Math.round(k), 1), 20);
   const [qv] = await embed([query]);
   const top = vectors

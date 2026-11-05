@@ -16,7 +16,7 @@ import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const RAG = resolve(HERE, "..");
-const { embed, dot, loadIndex, parseArgs, fmt } = await import(join(RAG, "rag/lib.ts"));
+const { embed, dot, loadIndex, parseArgs, fmt, modelMismatch } = await import(join(RAG, "rag/lib.ts"));
 
 // Доказ = стрім (date) і, за потреби, момент (sec). anyOf: досить будь-якого з варіантів.
 type Ev = { date: string; sec?: number };
@@ -46,6 +46,11 @@ const INDEX = isAbsolute(raw) ? raw : join(RAG, raw);
 const only = args.q ? Number(args.q) : null;
 const questions = readFileSync(join(RAG, "questions.txt"), "utf8").trim().split("\n");
 const { meta, vectors } = loadIndex(INDEX);
+const mismatch = modelMismatch(meta, INDEX);
+if (mismatch) {
+  console.error(mismatch);
+  process.exit(1);
+}
 
 const covers = (c: any, ev: Ev) => c.date === ev.date && (ev.sec === undefined || (c.start <= ev.sec && c.end > ev.sec));
 let got = 0, total = 0, full = 0, n = 0, streamsSum = 0;
