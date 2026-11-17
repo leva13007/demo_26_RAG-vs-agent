@@ -1,5 +1,4 @@
 # Відтворюються: yt-dlp (raw) і rag/ingest.ts (індекси)
-raw/
 rag/index*/
 arena/runs/
 __pycache__/
